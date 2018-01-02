@@ -14,6 +14,11 @@ export default class IndecisionApp extends React.Component {
 			options: [],
 			selectedOption: undefined
 		};
+
+		this.totalOptions = [];
+		this.count = 0;
+		this.optionPoint = -1;
+
 		this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
 		this.handleClearSelectedOption = this.handleClearSelectedOption.bind(this);
 		this.handleDeleteOption = this.handleDeleteOption.bind(this);
@@ -22,20 +27,56 @@ export default class IndecisionApp extends React.Component {
 	}
 
 	handleDeleteOptions(){
+		this.count = 0;
+		this.optionPoint = -1;
+
 		console.log('handleDeleteOptions');
 		this.setState(() => ({ options: [] }));
 	};
 
 	handleClearSelectedOption(){
 		this.setState(() => ({ selectedOption: undefined }));
+
+		this.optionPoint = -1;
 	}
 
 	handleDeleteOption(optionToRemove){
-		console.log('handleDeleteOption');
+		
+		this.count = this.count - 1;
+		//this.options.filter((option) => optionToRemove !== option);
 
-		this.setState((prevState) => ({ 
-			options: prevState.options.filter((option) => optionToRemove !== option)
-		}));
+		console.log('Count is ' + this.count);
+
+		var len = 0;
+
+		if (this.state.options !== undefined){
+			len = this.state.options.length;
+		}
+
+		if (len > 2)
+		{
+			console.log('The number is: ' + (this.count - 3));
+
+			// len = 3. 
+			console.log(this.state.options);
+
+			console.log(this.totalOptions);
+
+			var newOption = this.totalOptions[this.count - 3];
+
+			console.log(newOption);
+
+			this.setState((prevState) => ({ 
+				options: prevState.options.filter((option) => optionToRemove !== option).concat(newOption)
+			}));
+			
+		}
+		else {
+			this.setState((prevState) => ({ 
+				options: prevState.options.filter((option) => optionToRemove !== option)
+			}));
+		}
+		
 	 };
 
 	handlePick(){
@@ -44,13 +85,21 @@ export default class IndecisionApp extends React.Component {
 		this.setState(() => ({
 			selectedOption: option
 		}));
+
+		//this.optionPoint = randomNum;
 	};
+	
 	handleAddOption(option) {
-				
-		console.log(option)
+		this.totalOptions[this.count] = option;
+
+		this.count = this.count + 1;
+
+		//console.log(option)
+
 		if (!option) {
 			return 'Enter valid value to add item';
 		} else if (this.state.options.indexOf(option) > -1) {
+			
 			return 'This option already exists';	
 		}
 
@@ -61,6 +110,12 @@ export default class IndecisionApp extends React.Component {
 		}
 		if (len > 2)
 		{
+			/*
+			this.setState(() => ({
+				tempOption: prevState.options.getItem(len - 3)
+			}));
+			*/
+
 			this.setState((prevState) => ({
 				options: prevState.options.slice(len - 2, len).concat(option)
 			}));
@@ -73,8 +128,7 @@ export default class IndecisionApp extends React.Component {
 	};
 
 	componentDidMount() {
-		console.log('In componentDidMount');
-
+	
 		try {
 			
 			const json = localStorage.getItem('options');

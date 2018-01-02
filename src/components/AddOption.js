@@ -8,7 +8,8 @@ export default class AddOption extends React.Component {
 		this.handleAddOption = this.handleAddOption.bind(this);
 		
 		this.state = {
-			error: undefined
+			error: undefined,
+			tempOption: undefined
 		};
 	}	
 	
