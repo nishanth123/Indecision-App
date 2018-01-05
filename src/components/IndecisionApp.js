@@ -76,20 +76,21 @@ export default class IndecisionApp extends React.Component {
 		{
 			console.log('Count of total-options is ' + this.count);
 
-			console.log('test 5');
-
 			if (this.count > 3)
 			{
-				// TODO
+				
 				this.setState((prevState) => {
 					
 					var n = prevState.options.indexOf(optionToRemove);
+					
 					console.log('Index of to-be-deleted option  is ' + n);
 					
 					if (n < 1)// n = 0
 					{
+						var newOption = this.totalOptions[this.count - 3];
+
 						prevState.options[0] = newOption;
-						//this.setState({ options: prevState.options.splice(1) });
+						
 						console.log('test 8');						 
 					} // n = 0
 					else if (n < 2)// n = 1
@@ -116,8 +117,7 @@ export default class IndecisionApp extends React.Component {
 			}
 			else if (this.count > 2) // this.count = 3
 			{
-				console.log('test 3');
-				var newOption = this.totalOptions[this.count - 3];
+				
 				console.log('test 4');
 
 				this.setState((prevState) => {
@@ -127,18 +127,27 @@ export default class IndecisionApp extends React.Component {
 
 					if (n < 1)// n = 0
 					{
+						var newOption = this.totalOptions[this.count - 3];
+
 						prevState.options[0] = newOption;
-						console.log('test 1');
-						this.setState({ options: prevState.options.splice(1) });
+						
 						console.log('test 2');						 
 					} // n = 0
 					else if (n < 2)// n = 1
 					{
+						console.log('test 15');
+
+						var newOption = this.totalOptions[this.count - 3];
+
 						prevState.options[1] = prevState.options[0];
-						prevState.options[0] = newOption;						
+						prevState.options[0] = newOption;
+						
+						console.log('test 16');
 					}
 					else // n = 2
 					{
+						var newOption = this.totalOptions[this.count - 3];
+
 						prevState.options[2] = prevState.options[1];
 						prevState.options[1] = prevState.options[0];
 						prevState.options[0] = newOption;
@@ -152,15 +161,58 @@ export default class IndecisionApp extends React.Component {
 					}
 				})// setState end
 			} // this.count > 2
+			else if (this.count > 1)// count = 2
+			{
+				this.setState((prevState) => {
+					
+					var n = prevState.options.indexOf(optionToRemove);
+					console.log('Index of to-be-deleted option  is ' + n);
+					
+					if (n < 1)// n = 0
+					{
+						var newOption = this.totalOptions[this.count - 2];
+				
+						prevState.options[0] = newOption;
+						
+						this.setState({ options: prevState.options.splice(1) }); 
+					} // n = 0
+					else if (n < 2)// n = 1
+					{
+						console.log('test 11')
+						var newOption = this.totalOptions[this.count - 2];
+					
+						console.log('test 12')
+						prevState.options[1] = prevState.options[0];
+						prevState.options[0] = newOption;
+						
+						this.setState({ options: prevState.options.splice(1) });
+					}
+					else // n = 2
+					{
+						var newOption = this.totalOptions[this.count - 2];
+					
+						console.log('test 17')
+						//this.setState({ options: prevState.options.splice(-2) }); // not 2. not 1. not 0. not -2. not -1
+					}
+					
+					return {
+							options: prevState.options
+						}
+					})// setState end
+					
+			}
 						
 		}// len > 2		
 		else if (len > 1) // len = 2
 		{
+			console.log('test 13');
 			console.log('Count of total-options is ' + this.count);
 						
 			this.setState((prevState) => {
+				
 				var n = prevState.options.indexOf(optionToRemove);
-					
+				console.log('test 14');
+
 				console.log('Index of to-be-deleted option  is ' + n);
 				
 				if (n < 1)// first row
@@ -274,7 +326,7 @@ export default class IndecisionApp extends React.Component {
 	}
 
 	render() {
-		const subtitle = 'Put your life in the computer hands';
+		const subtitle = 'Put your life within a computer hands';
 
 		return (
 			<div>
