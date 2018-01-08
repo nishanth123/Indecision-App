@@ -33,16 +33,22 @@ export default class IndecisionApp extends React.Component {
 
 	handleClearSelectedOption(){
 		this.setState(() => ({ selectedOption: undefined }));
-
 	}
 
 	handleDeleteOption(optionToRemove){
 		let newOptions = [];
-		for (let i = this.state.options.length; i > 0; i--){
-			this.state.options.push(optionToRemove);
+		
+		for (let i = 0; i < this.state.options.length; i++){			
+			if (this.state.options[i] === optionToRemove){
+				// do nothing
+			}
+			else
+			{
+				newOptions.push(this.state.options[i]);
+			}
 		}
 
-		newOptions = this.state.options;
+		this.setState(() => ({ options: newOptions }));
 	};
 
 	handlePick(){
@@ -56,7 +62,7 @@ export default class IndecisionApp extends React.Component {
 	};
 	
 	handleAddOption(option) {
-		this.setState({
+		this.setState({			
 			options: this.state.options.concat(option)
 		});
 	};
@@ -97,14 +103,18 @@ export default class IndecisionApp extends React.Component {
 	*/
 
 	render() {
-		const subtitle = 'Put your life within a computer hands';
+		const subtitle = 'Put your life in the hands of a computer hands';
 
 		let renderOptions = [];
 		let displayCount = 3;
 
-		for(let i = this.state.options; i > 0; i--){
-			this.state.options.push(renderOptions[i]);
+		for(let i = this.state.options.length - 1; i > -1; i--){
+			renderOptions.push(this.state.options[i]);
 			displayCount--;
+
+			if (displayCount === 0){
+				break;
+			}
 		}
 
 		renderOptions.reverse();
